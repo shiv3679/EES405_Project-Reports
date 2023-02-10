@@ -266,13 +266,115 @@ Lab Assignment-01
 The vertical thermal profile averaged over the whole of the globe doesn't seem to vary much as the annual budget of sunlight received doesn't change across the seasons (summer in the northern hemisphere is compensated by winter in the southern hemisphere and vice versa) as it is averaged over the entire globe.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{global_seasons.png}
-    \caption{Caption}
+    \includegraphics[width=0.45\textwidth]{global_seasons.png}
+    \caption{Vertical thermal structure of globe}
     \label{fig:my_label}
 \end{figure}
 
+\subsubsection{Vertical thermal structure of different regions in summer}
+As discussed above, we can see the vertical thermal structure of the poles is very different as compared to the tropics. Certain visible characteristics are:
+\begin{itemize}
+    \item Based on the definition of the troposphere as discussed in the class, we can see that troposphere height is more near the tropics and equator and less near the north pole.
+    \item The tropopause temperature is also different for the poles and tropics/equatorial region. \\ North pole has tropopause temperature, which is almost 20-25 deg C lower as compared to the tropics/equatorial regions.
+\end{itemize}
+ \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.45\textwidth]{summer_regions.png}
+     \caption{Vertical thermal structure of different regions in summer}
+     \label{fig:my_label}
+\end{figure}
+
+\newpage
+Lab Assignment-01
+\subsubsection{Vertical thermal structure of different regions in winter}
+ Similar to what we see in the summer season, but the difference between the tropopause temperature of the tropics/equatorial region is less as compared to the north pole (almost 10-15 deg C).
+ \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.5\textwidth]{winter_regions.png}
+     \caption{Vertical thermal structure of different regions in winter}
+     \label{fig:my_label}
+ \end{figure}
+
 
 \end{Solution}
+
+\vspace{1cm}
+\hline
+\vspace{1cm}
+
+
+\subsubsection*{Spatial distribution of Diurnal temperature range for pre-summer season (M, A
+M months) using Climate Research Unit data. Follow the steps:}
+\begin{Problem}
+\begin{enumerate}
+    \item Select MAM months from CRU Tmin data for the period 1980-2020.
+    \item Select MAM months from CRU Tmax data for the period 1980-2020.
+    \item Average for entire time period for both Tmax and Tmin files
+    \item Find difference between Tmax and Tmin
+    \item You will get Diurnal temperature range
+\end{enumerate}
+\end{Problem}
+
+\begin{Solution}
+    Did the following steps to get the diurnal temperature range from 1981-2020\\
+    \begin{itemize}
+        \item Merged the decade files into one file, which contains the tmn and tmx data from 1981 to 2020 (replace tmn for tmx for tmx data) \\
+        \textcolor{blue}{cdo -r -f nc merge 1981.1991.tmn.nc 1991.2000.tmn.nc 2001.2010.tmn.nc 2011.2020.tmn.nc 1981.2020.tmn.nc}
+    \end{itemize}
+    \newpage
+    Lab Assignment-01
+    \vspace{1cm}
+    \begin{itemize}
+        \item Select the MAM (March, April and May) months from 1981.2020.tmx/n.nc file \\
+        \textcolor{blue}{cdo -r -f nc selmon,3,4,5 1981.2020.tmn/x.nc 1981.2020.MAM.nc}
+
+        \item These data files were imported into python and further analysis was carried out
+        \begin{enumerate}
+            \item Taking mean along time dimension \\
+            \textcolor{blue}{tmn/xMean = tmx/nMAM.mean(dim='Time')}
+            \item Difference of tmxMean and tmnMean to calculate diurnal temperature range \\
+            \textcolor{blue}{tDTR = tmxMean - tmnMean}
+        \end{enumerate}
+        
+    \end{itemize}
+
+    \subsection{Diurnal temperature range of entire globe for MAM months over 1981-2020}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{Screenshot from 2023-02-11 01-10-57.png}
+        \caption{Diurnal temperature range 1981-2020 for MAM months}
+        \label{fig:my_label}
+    \end{figure}
+\end{Solution}
+
+\newpage
+Lab Assignment-01
+
+
+\section{Appendix}
+
+A sample code which was used to generate the vertical thermal structure plots
+
+\lstinputlisting[language = python]{vertical_thermal_structure.py}
+
+\newpage
+Lab Assignment-01
+\vspace{1cm}
+
+Actual Python code used to generate all the vertical thermal structure plots 
+
+\lstinputlisting[language = python]{season.py}
+\vspace{1cm}
+\hline
+\vspace{1cm}
+
+Python code used to generate the diurnal temperature range for MAM months from 1981-2020
+
+\lstinputlisting[language = python]{dtr.py}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Complete the assignment now
