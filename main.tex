@@ -79,16 +79,17 @@ innertopmargin=\topskip,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Fill in the appropriate information below
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}     
-\newcommand\course{Course name}                            % <-- course name   
-\newcommand\hwnumber{COMP400XXX-X}                                 % <-- homework number
-\newcommand\Information{(Your name)}                        % <-- personal information
+\newcommand\course{EES405}                            % <-- course name   
+\newcommand\hwnumber{Lab Assignment-01}                                 % <-- homework number
+\newcommand\Information{(Shiv Shankar Singh)}% <-- personal information
+\newcommand\Roll{(MS18006)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Page setup
 \pagestyle{fancy}
 \headheight 35pt
 \lhead{\today}
-\rhead{\includegraphics[width=2.5cm]{icl_logo.png}}
+\rhead{\includegraphics[width=2.5cm]{iisermlogo.jpg}}
 \lfoot{}
 \pagenumbering{arabic}
 \cfoot{\small\thepage}
@@ -141,7 +142,7 @@ innertopmargin=\topskip,
         \vspace*{3cm}
             
         \Huge
-        \textbf{PMT/MMT}
+        \textbf{Climate Data Analysis}
             
         \vspace{1cm}
         \huge
@@ -159,7 +160,7 @@ innertopmargin=\topskip,
             
         \vspace{1cm}
             
-        \includegraphics[width=0.4\textwidth]{icl_logo.png}
+        \includegraphics[width=0.4\textwidth]{iisermlogo.jpg}
         \\
         
         \Large
@@ -175,55 +176,102 @@ innertopmargin=\topskip,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %New problem
 \newpage
-Remember to modify the information above.
-\subsubsection*{The following will give you an overview of what you can do with this template.}
+Lab Assignment-01
+\subsubsection*{Plot vertical thermal structure of the atmosphere using NCEP/NCAR long-term mean data for summer (JJAS mean), winter (DJF mean) and annual (mean of Jan-Dec) using Python.}
 
 \begin{Problem}
-Type your problem here. \\
-Personally I recommend Mathpix (https://mathpix.com/), which can easily export your ProblemBook.pdf to \LaTeX \ code.
+\begin{enumerate}
+    \item Vertical Thermal structure of the Globe (0-360E $\&$  90S – 90N)
+    \item Vertical Thermal structure of the Tropics (0-360E $\&$ 30S – 30N)
+    \item Vertical Thermal structure of the North Pole (0-360E $\&$ 70N – 90N)
+    \item Vertical Thermal structure over India (60-110E $\&$ 6N – 35N)
+\end{enumerate}
 \end{Problem}
 
 \begin{Solution}
-Write your solution here.
 
-Example of equations. $x+1=2$. Or
-$$x-1=0$$
+% Example of a lemma.
+% \begin{lemma}
+%     This is a lemma.
+% \end{lemma}
 
-Example of a list of equations.
-\begin{align*}
-    x &= 1\\
-    y &= 2
-\end{align*}
+% Example of a proof.
+% \begin{proof}
+%     Write your proof here.
+% \end{proof}
 
-Example of a matrix.
-$$\begin{pmatrix}1&0\\0&1\end{pmatrix}$$
+% Example of including a picture.
+% \begin{center}
+%     \includegraphics[width = 4cm]{iisermlogo.jpg}
+% \end{center}
 
-Example of a lemma.
-\begin{lemma}
-    This is a lemma.
-\end{lemma}
+% Example of referring to a piece of code.
+% \lstinputlisting[language = python]{Program Solution.py}
 
-Example of a proof.
-\begin{proof}
-    Write your proof here.
-\end{proof}
+% Example of a table.
+% \begin{equation*}\begin{tabular}{ c c c }
+%                 & Mean          & SD \\ 
+%      Fall 2077  & 7.046512      & 1.714552 \\  
+%      Fall 1977  & 9.102941      & 1.568919
+% \end{tabular}\end{equation*}
 
-Example of including a picture.
-\begin{center}
-    \includegraphics[width = 4cm]{icl_logo.png}
-\end{center}
+% Overall, this is a quite basic template for assignments, and above are only some basic features. I included enough packages and set a few environments. You may modify them or add features to fit your personal preference. Enjoy using it!
 
-Example of referring to a piece of code.
-\lstinputlisting[language = python]{Program Solution.py}
+I plotted the vertical thermal structure of different regions (Globally, Tropics (-30,30), North Pole (70,90) and India) across three different seasons (Summer (JJAS), winter (DJF), and annual mean). \\
+I followed the following protocol/steps in generating all the above plots. \\
 
-Example of a table.
-\begin{equation*}\begin{tabular}{ c c c }
-                & Mean          & SD \\ 
-     Fall 2077  & 7.046512      & 1.714552 \\  
-     Fall 1977  & 9.102941      & 1.568919
-\end{tabular}\end{equation*}
+\begin{enumerate}
+    \item \textbf{Step:1} Load the data in an array format with xarray library
+    \item \textbf{Step:2} Take mean of the data along latitude, longitude and time axis 
+    \item \textbf{Step:3} Generate plot with data.mean along x-axis and pressure levels along y-axis
+    \end{enumerate}
+For python source code to execute the above task, see Appendix.\\
+\subsection*{Plots generated}
+% Vertical thermal structure of different regions across seasons
+\subsubsection{Vertical Thermal structure over India (60-110E $\&$ 6N – 35N)}
 
-Overall, this is a quite basic template for assignments, and above are only some basic features. I included enough packages and set a few environments. You may modify them or add features to fit your personal preference. Enjoy using it!
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=0.33\textwidth]{india_seasons.png}
+    \caption{Vertical Thermal structure over India (60-110E $\&$ 6N – 35N)}
+    \label{fig:my_label}
+\end{figure}
+Here, we can see that there are almost no changes in the vertical thermal structure going up into the atmosphere, as India lies in the tropical region. The convection setup helps in the regulation of the temperature profile across seasons.
+
+\newpage
+Lab Assignment-01
+\subsubsection{Vertical thermal structure of Tropics (0-360 $\&$ 30S-30N)}
+As expected, since the tropics receive the same amount of sunlight throughout the year and there are no significant changes in the solar flux received across the seasons, hence the vertical temperature profile is almost the same across the seasons.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{tropics_seasons.png}
+    \caption{Vertical thermal structure of Tropics (0-360 $\&$ 30S-30N)}
+    \label{fig:my_label}
+\end{figure}
+
+\subsubsection{Vertical thermal structure of North Pole (0-360 $\&$ 70N-90N)}
+
+Since, the amount of sunlight received by the north pole varies drastically across seasons, the same can be inferred from vertical thermal structure over north pole, where we can see that the profiles of different seasons(summer and winter) are quite spread apart from each other.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{poles_seasons.png}
+    \caption{Vertical thermal structure of North Pole (0-360 $\&$ 70N-90N)}
+    \label{fig:my_label}
+\end{figure}
+
+\newpage
+Lab Assignment-01
+\subsubsection{Vertical thermal structure of globe}
+The vertical thermal profile averaged over the whole of the globe doesn't seem to vary much as the annual budget of sunlight received doesn't change across the seasons (summer in the northern hemisphere is compensated by winter in the southern hemisphere and vice versa) as it is averaged over the entire globe.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{global_seasons.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+
 \end{Solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
