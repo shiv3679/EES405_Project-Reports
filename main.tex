@@ -142,7 +142,7 @@ innertopmargin=\topskip,
         \vspace*{3cm}
             
         \Huge
-        \textbf{Climate Data Analysis}
+        \textbf{Climate data analysis and Visualization (EES405)}
             
         \vspace{1cm}
         \huge
@@ -348,6 +348,275 @@ M months) using Climate Research Unit data. Follow the steps:}
     \end{figure}
 \end{Solution}
 
+Here, we can see that desert regions or relatively drier regions have higher DTR as expected due to extreme temperature changes in day and night. \\
+
+We also know that high DTR is often associated with dry and arid climates, while low DTR is associated with more humid or marine climates. Therefore, the high DTR in the Sahara and Thar regions indicates a dry climate, while the low DTR in the coastal regions suggests a more moderate or humid climate.
+
+\newpage
+Lab Assignment-01
+
+\subsection*{Compute and plot standard deviation of JJAS precipitation anomalies over India using CRU Data for the period 1980-2015? Reference (1960-1990)}
+\begin{Problem}
+    Compute and plot standard deviation of JJAS precipitation anomalies over India using CRU Data for the period 1980-2015? Reference (1960-1990)
+\end{Problem}
+
+\begin{Solution}
+    Did the following steps to get the JJAS precipitation anomalies over India.
+    \begin{itemize}
+        \item Extract the reference data and 1980-2105 dataset from CRU dataset main file. \\
+        \textcolor{blue}{cdo -r -f nc selyear,1960/1990 cru.pre.nc 1960.1990.pre.nc} \\
+        \textcolor{blue}{cdo -r -f nc selyear,1980/2015 cru.pre.nc 1980.2015.pre.nc}
+
+        \item Extract JJAS (June, July, August and September) months from both the datasets \\
+        \textcolor{blue}{cdo -r -f nc selmon.6,7,8,9 1960.1990.pre.nc 1960.1990.JJAS.pre.nc}\\
+        \textcolor{blue}{cdo -r -f nc selmon.6,7,8,9 1980.2015.pre.nc 1980.2015.JJAS.pre.nc} 
+
+        \item Estimate the climatology from the reference data (1960-1990) \\
+        \textcolor{blue}{cdo -r -f nc timmean 1960.1990.pre.nc mean.nc}
+
+        \item Estimate anomalies defined as $\text{Anomaly } = (X_i - \bar{X}) $, where $\bar{X}$ is the climatology \\
+        \textcolor{blue}{cdo -r -f nc sub 1980.2015.JJAS.pre.nc anomaly.nc}
+
+        \item Compute the standard deviation of anomalies calculated above \\
+        \textcolor{blue}{cdo -r -f nc timstd anomaly.nc anomaly.std.nc}
+        
+        \end{itemize}
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.65\textwidth]{india-spatial.png}
+            \caption{Standard Deviation of precipitation anomaly for JJAS months over 1980-2015.png}
+            \label{fig:my_label}
+        \end{figure}
+We can see that coastal regions have high precipitation anomalies as compared to inland regions and desert and arid regions as precipitation is more likely to be unpredictable in high precipitation regions and hence more standard deviation of precipitation anomalies (more spread of the anomalies data).        
+\end{Solution}
+
+\newpage
+Lab Assignment-01
+\subsection*{Find time series of correlation between precipitation and mean temperature from CRU data.}
+\begin{Problem}
+    \begin{enumerate}
+        \item Extract MAMJJASON period for both the variable from 1990-2010
+        \item Estimate Climatology
+        \item Correlates all grid points of the two variables. (Time series)
+    \end{enumerate}
+\end{Problem}
+
+\begin{Solution}
+    Did the following steps to get the correlation between temperature and precipitation for MAMJJASON months
+    \begin{itemize}
+        \item Extract the dataset for the period of 1990-2010 from main CRU datafile\\
+        \textcolor{blue}{cdo -r -f nc selyear,1990/2010 cru.tmp.nc 1990.2010.tmp.nc}\\
+        \textcolor{blue}{cdo -r -f nc selyear,1990/2010 cru.pre.nc 1990.2010.pre.nc}
+
+        \item Extract MAMJJASON (Mar., Apr., June, July, Aug., Sept. Oct. Nov.) from the dataset \\
+        \textcolor{blue}{cdo -r -f nc selmon,3/11 1990.2010.tmp.nc 1990.2010.tmp.MAMJJASON.nc} \\
+        \textcolor{blue}{cdo -r -f nc selmon,3/11 1990.2010.pre.nc 1990.2010.pre.MAMJJASON.nc}
+
+        \item Estimate climatology \\
+        \textcolor{blue}{cdo -r -f nc timmean 1990.2010.tmp.MAMJJASON.nc mean.tmp.nc} \\
+        \textcolor{blue}{cdo -r -f nc timmean 1990.2010.pre.MAMJJASON.nc mean.pre.nc}
+
+        \item Correlating the grid points (Time series) \\
+        \textcolor{blue}{cdo -r -f nc fldcor mean.tmp.nc mean.pre.nc tmp.pre.fldcor.nc}
+
+        
+    \end{itemize}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{Temperature and Precipitation correlation for 1990-2010.png}
+        \caption{Temperature and Precipitation correlation for 1990-2010}
+        \label{fig:my_label}
+    \end{figure}
+
+    Here, we can see that there exists higher positive correlation between temperature and precipitation during non-monsoon months, and higher temperature drives the oncoming of precipitation, but as soon as the monsoon season starts, the correlation between the two
+    \newpage
+    Lab Assignment-01
+    \vspace{1cm}
+    
+    variables weaken, and we see that there is very less correlation between temperature and precipitation during monsoon months. We should acknowledge that temperature is not the only driving factor of precipitation during monsoon season, and there are multiple factors affecting precipitation during these months; hence we can expect a weaker correlation between temperature and precipitation during monsoon seasons.
+\end{Solution}
+
+\subsection*{Spatial map of correlation between precipitation and mean temperature from CRU data.}
+
+\begin{Problem}
+    \begin{enumerate}
+        \item Extract JJA period for both the variable from 1990-2010
+        \item Estimate Climatology (ymonmean)
+        \item Correlation at each grid point for all times of the two variables
+    \end{enumerate}
+\end{Problem}
+
+\begin{Solution}
+    Followed the same steps as above, except for the last part of the spatial correlation between temperature and precipitation.
+    \begin{itemize}
+        % \item Extract the dataset for the period of 1990-2010 from main CRU datafile\\
+        % \textcolor{blue}{cdo -r -f nc selyear,1990/2010 cru.tmp.nc 1990.2010.tmp.nc}\\
+        % \textcolor{blue}{cdo -r -f nc selyear,1990/2010 cru.pre.nc 1990.2010.pre.nc}
+
+        % \item Extract JJA (June, July, August) from the dataset \\
+        % \textcolor{blue}{cdo -r -f nc selmon,6/8 1990.2010.tmp.nc 1990.2010.tmp.JJA.nc} \\
+        % \textcolor{blue}{cdo -r -f nc selmon,6/8 1990.2010.pre.nc 1990.2010.pre.JJA.nc}
+
+        % \item Estimate climatology \\
+        % \textcolor{blue}{cdo -r -f nc timmean 1990.2010.tmp.JJA.nc mean.tmp.nc} \\
+        % \textcolor{blue}{cdo -r -f nc timmean 1990.2010.pre.JJA.nc mean.pre.nc}
+
+        \item Correlating the grid points (Spatial map) \\
+        \textcolor{blue}{cdo -r -f nc timcor mean.tmp.nc mean.pre.nc tmp.pre.timcor.nc}
+
+        
+    \end{itemize}
+
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[width=0.85\textwidth]{spatial-correlation-tmp-pre.png}
+        \caption{Spatial map of correlation between precipitation and mean temperature}
+        \label{fig:my_label}
+    \end{figure}
+
+    From the plot, we can see a positive correlation in the equatorial regions where higher temperature drives the precipitation, and higher tropics or desert regions have a negative correlation coefficient. 
+    
+\end{Solution}
+
+\newpage
+Lab Assignment-01
+\vspace{0.25cm}
+\subsection*{Spatial map of correlation between precipitation from CRU data and outgoing longwave radiation from NOAA dataset.}
+
+\begin{Problem}
+    \begin{enumerate}
+        % \item Use CRU precipitation data and NOAA OLR Data.
+        \item Remap them (CRU => NOAA)
+        \item Plot spatial correlation between them during JJA season
+    \end{enumerate}
+\end{Problem}
+
+\begin{Solution}
+    Did the following steps to get the spatial correlation of precipitation data from CRU and OLR data from NOAA
+    \begin{itemize}
+        \item Used the climatology data of precipitation from earlier problem \\
+        \textcolor{blue}{cru.pre.mean.nc}
+        \item Estimate climatology of OLR data from NOAA \\
+        \textcolor{blue}{cdo -r -f nc timmean olr.noaa.nc olr.noaa.mean.nc} 
+        \item Regrid the NOAA dataset(2.5deg) to match the resolution of CRU dataset (0.5deg)
+        \begin{itemize}
+            \item Getting the grid description from cru dataset and storing it into a text file \\
+            \textcolor{blue}{cdo -r -f nc griddes cru.pre.mean.nc > gridrefdata}
+            \item Using the grid description file to regrid the NOAA dataset\\
+            \textcolor{blue}{cdo -r -f nc remapbil,gridrefdata olr.noaa.mean.nc remap.olr.mean.nc}
+        \end{itemize}
+
+        \item Estimate spatial correlation between precipitation and OLR \\
+        \textcolor{blue}{cdo timcor remap.olr.mean.nc cru.pre.mean.nc olr.pre.nc}
+    \end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{spatial-correlation-pre-olr.png}
+    \caption{Spatial map of correlation between precipitation and outgoing longwave radiation}
+    \label{fig:my_label}
+\end{figure}
+
+In regions with high moisture content, such as tropical rainforests or coastal areas, there is typically a negative correlation between OLR and precipitation. This is because high 
+
+\newpage
+Lab Assignment-01 \\
+
+\vspace{1cm}
+moisture content leads to cloud formation and increased absorption of longwave radiation, which can result in lower OLR and increased precipitation.
+
+However, the relationship between OLR and precipitation may be more complex in drier regions. For example, high OLR values may indicate a lack of atmospheric moisture and a lower likelihood of precipitation in some arid or semi-arid regions. In other cases, high OLR values may be associated with the presence of high-altitude clouds, which can trap longwave radiation and contribute to the warming of the atmosphere but may not necessarily result in precipitation.
+    
+\end{Solution}
+
+\subsection{Year to Year Variation of (Time evolution) of area-averaged of hot season (MAM) temperatures (seasonal anomalies normalized with standard deviation) over CIR.}
+\begin{Problem}
+    Year to Year Variation of (Time evolution) of area-averaged of hot season (MAM) temperatures (seasonal anomalies normalized with standard deviation) over CIR.
+\end{Problem}
+
+\begin{Solution}
+    
+
+
+Did the following steps to get the standardized temperature anomaly over the central Indian region (CIR) for MAM months. 
+\begin{itemize}
+    \item Compute MAM mean for each year\\
+    \textcolor{blue}{cdo selmon,3,4,5 cru.tmp.nc cru.tmp.MAM.nc} \\
+    \textcolor{blue}{cdo yearmean cru.tmp.MAM.nc cru.tmp.MAM.yearmean.nc}
+
+    \item Extract Central Indian region  \\
+    \textcolor{blue}{cdo -sellonlatbox,70,88,18,28 cru.tmp.MAM.yearmean.nc cru.tmp.MAM.yearmean.CIR.nc}
+
+    \item Compute area average of the CIR \\
+    \textcolor{blue}{cdo fldmean cru.tmp.MAM.yearmean.nc cru.tmp.MAM.yearmean.fldmean.nc}
+
+    \item Compute Climatology \\
+    \textcolor{blue}{cdo timmean cru.tmp.MAM.yearmean.fldmean.nc cru.tmp.MAM.yearmean.fldmean.timmean.nc}
+
+    \item Compute seasonal anomalies \\
+    \textcolor{blue}{cdo sub cru.tmp.MAM.yearmean.fldmean.nc cru.tmp.MAM.yearmean.fldmean.timmean.nc anomaly.nc}
+
+    \item Calculate standardized anomaly\\
+    \textcolor{blue}{cdo timstd cru.tmp.MAM.yearmean.fldmean.nc cru.tmp.MAM.yearmean.fldmean.std.nc} \\
+
+    \newpage
+    Lab Assignment-01\\
+    
+    \vspace{1cm}
+    \textcolor{blue}{cdo div anomaly.nc cru.tmp.MAM.yearmean.fldmean.std.nc anomaly.stddiv.nc}
+
+    \item Set relative time axis \\
+    \textcolor{blue}{cdo -r settaxis,1901-01-01,00:00:00,1year anomaly.stddiv.nc anomaly.stddiv.relative.nc}
+\end{itemize}
+
+\subsection*{Plots generated} 
+ \subsubsection{Standardized temperature anomaly for 1901-2020} 
+ \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.85\textwidth]{stddiv-all.png}
+     \caption{Standardized temperature anomaly for 1901-2020}
+     \label{fig:my_label}
+ \end{figure}
+From the above plot, we can see an increase in the standardized temperature anomaly over the years. To better visualise the increase in the trend, let's add a trendline (linear fit to the data) and see the change
+ \subsubsection{Standardized temperature anomaly for 1901-2020 with trendline} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Standardized temperature anomaly for 1901-2020.png}
+    \caption{Standardized temperature anomaly for 1901-2020 with trendline}
+    \label{fig:my_label}
+\end{figure}
+
+After adding the liner fit trend, we see an increasing trend over the years. 
+
+\newpage
+Lab Assignment-01 \\
+
+\vspace{1cm}
+
+I tried to reduce the time dimension from 1901-2020 to 1990-2010 to see the temperature anomaly trend in recent years and see whether the rate at which its increasing is more or less. 
+ \subsubsection{Standardized temperature anomaly for 1990-2010} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{stddiv-less.png}
+    \caption{Standardized temperature anomaly for 1990-2010}
+    \label{fig:my_label}
+\end{figure}
+Here, we see a more steep increase in the standardized temperature anomaly as compared to 1901-2020 plot. To better analyse the increase, let's fit the linear fit trend to datapoints and see whether the slope increases or decreases. 
+ \subsubsection{Standardized temperature anomaly for 1990-2010 with trendline} 
+ \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.85\textwidth]{Standardized temperature anomaly for 1990-2010.png}
+     \caption{Standardized temperature anomaly for 1990-2010 with trendline}
+     \label{fig:my_label}
+ \end{figure}
+
+From the plot, we can see that the trendline's slope is way larger compared to the 1901-2020 dataset. \textbf{Hence, we can conclude from the above plots that the temperature anomaly is not just increasing but that the rate of increase is accelerating.}
+
+\end{Solution}
+
+
+
 \newpage
 Lab Assignment-01
 
@@ -373,6 +642,9 @@ Python code used to generate the diurnal temperature range for MAM months from 1
 
 \lstinputlisting[language = python]{dtr.py}
 
+\vspace{1cm}
+Python code to plot the time series and calculate the trendline from the data points plotted
+\lstinputlisting[language = python]{trend.py}
 
 
 
